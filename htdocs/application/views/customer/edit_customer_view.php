@@ -126,7 +126,10 @@
                             <?php echo all_timezones($row->customer_timezone);?>                       
                         </select>
                 </td></tr>
-                
+                <tr>
+                    <td align="right"><span class="required">-----></span> Actual balance:</td>
+                    <td align="left"><?php echo $row->customer_balance;?></td>
+                </tr>         
                 
                 <tr>
                     <td align="right" colspan="2">&nbsp;</td>

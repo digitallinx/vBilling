@@ -189,7 +189,18 @@ class Cdr extends CI_Controller {
 		$config['last_link'] = 'last';
 
 		$data['count'] = $this->cdr_model->get_cdr_main_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents);
-		$config['total_rows'] = $data['count'];
+                //MW modifications
+                $data['billsec'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, billsec);
+                $data['totalsellcost'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, total_sell_cost);
+                $data['totalbuycost'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, total_buy_cost);
+                $mw_total_duration = round($data['billsec']/60,2);
+                $mw_total_margin = round(($data['totalsellcost']-$data['totalbuycost']),2);
+                $data['msg_duration_found'] = "&nbsp;_______&nbsp;&nbsp;Duration : ".$mw_total_duration."&nbsp;".$msg_duration_found."";
+                $data['msg_margin_found'] = "&nbsp;_______&nbsp;&nbsp;Margin : ".$mw_total_margin."&nbsp;Euros";
+                $data['msg_sell_found'] = "&nbsp;_______&nbsp;&nbsp;Buy : ".$data['totalbuycost']."&nbsp;Euros"."&nbsp;_______&nbsp;&nbsp;Sell : ".$data['totalsellcost']."&nbsp;Euros";
+                //MW
+                
+                $config['total_rows'] = $data['count'];
 
 		if(isset($_GET['per_page']))
 		{

@@ -51,7 +51,7 @@ $atts = array(
 <!--********************************FILTER BOX************************-->
 <div style="text-align:center;padding:10px">
 	<div class="button white">
-		<div style="color:green; font-weight:bold;"> <?php echo $msg_records_found;?> </div>
+        	<div style="color:green; font-weight:bold;"> <?php echo $msg_records_found; echo $msg_duration_found; echo $msg_margin_found; echo $msg_sell_found;?> </div>	
 		<div style="margin-top:5px;margin-bottom:-5px;"> <a href="#" alt="Export As PDF" title="Export As PDF" class="exp_pdf"><img src="<?php echo base_url();?>assets/images/export-pdf.gif"/></a> <a href="#" alt="Export As EXCEL" title="Export As EXCEL" class="exp_exl"><img src="<?php echo base_url();?>assets/images/export-excel.png"/></a> <a href="#" alt="Export As CSV" title="Export As CSV" class="exp_csv"><img src="<?php echo base_url();?>assets/images/export-csv.png"/></a> </div>
 		<form method="get" action="<?php echo base_url();?>cdr/" id="filterForm">
 			<table width="100%" cellspacing="0" cellpadding="0" border="0" id="filter_table">
@@ -213,8 +213,8 @@ $atts = array(
 						<td width="7%" align="center">Sell Rate</td>
 						<td width="7%" align="center">Total Cost</td>
 						<td width="7%" align="center">Total Charges</td>
-						<td width="7%" align="center"></td>
-						<td width="7%" align="center"></td>
+						<td width="7%" align="center">PDD</td>
+						<td width="7%" align="center">Ringing time</td>
 					</tr>
 					<tr>
 						<td colspan="16" id="shadowDiv" style="height:5px;margin-top:-1px"></td>
@@ -277,8 +277,10 @@ $atts = array(
 														<?php } else { ?>
 															<td align="center">0</td>
 															<?php } ?>
-															<td align="center">&nbsp;</td>
-															<td align="center">&nbsp;</td>
+															<td align="center"><?php if($row->progress_media_time != '0') echo round(($row->progress_media_time - $row->created_time)/1000000); else echo "-"; ?></td>
+															<td align="center"><?php if($row->answered_time != '0') echo round(($row->answered_time - $row->progress_media_time)/1000000);
+elseif($row->progress_media_time != '0') echo round(($row->hangup_time - $row->progress_media_time)/1000000);
+else echo "-"; ?></td>
 															<?php } else { ?>
 																<!--get admin rates -->
 																<?php
