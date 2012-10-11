@@ -278,7 +278,7 @@ $atts = array(
 															<td align="center">0</td>
 															<?php } ?>
 															<td align="center"><?php if($row->progress_media_time != '0') echo round(($row->progress_media_time - $row->created_time)/1000000); else echo "-"; ?></td>
-															<td align="center"><?php if($row->answered_time != '0') echo round(($row->answered_time - $row->progress_media_time)/1000000);
+															<td align="center"><?php if($row->answered_time != '0' AND $row->progress_media_time != '0') echo round(($row->answered_time - $row->progress_media_time)/1000000);
 elseif($row->progress_media_time != '0') echo round(($row->hangup_time - $row->progress_media_time)/1000000);
 else echo "-"; ?></td>
 															<?php } else { ?>

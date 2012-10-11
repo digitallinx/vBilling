@@ -190,10 +190,16 @@ class Cdr extends CI_Controller {
 
 		$data['count'] = $this->cdr_model->get_cdr_main_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents);
                 //MW modifications
+		$data['billsec'] = 0;
+                $data['totalsellcost'] = 0;  
+                $data['totalbuycost'] = 0;
+                if ($data['count'] != 0) {
                 $data['billsec'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, billsec);
                 $data['totalsellcost'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, total_sell_cost);
                 $data['totalbuycost'] = $this->cdr_model->get_cdr_mw_billsec_count($filter_date_from, $filter_date_to, $filter_phonenum, $filter_caller_ip, $filter_customers, $filter_groups, $filter_gateways, $filter_call_type, $duration_from, $duration_to, $filter_contents, total_buy_cost);
+		}
                 $mw_total_duration = round($data['billsec']/60,2);
+		$msg_duration_found = "Minutes";
                 $mw_total_margin = round(($data['totalsellcost']-$data['totalbuycost']),2);
                 $data['msg_duration_found'] = "&nbsp;_______&nbsp;&nbsp;Duration : ".$mw_total_duration."&nbsp;".$msg_duration_found."";
                 $data['msg_margin_found'] = "&nbsp;_______&nbsp;&nbsp;Margin : ".$mw_total_margin."&nbsp;Euros";
