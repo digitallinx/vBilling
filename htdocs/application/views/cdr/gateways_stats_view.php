@@ -190,10 +190,14 @@
 									echo "N / A";
 								}
 								?></td>
-              <td align="center"><?php 
-					$acd = $total_duration_in_min_sec / $this->cdr_model->get_gateway_total_answered_calls($row->gateway_name, $row->sofia_id, $filter_date_from, $filter_date_to);
+              <td align="center"><?php
+                                      $mw_gateway_total_answered_calls = $this->cdr_model->get_gateway_total_answered_calls($row->gateway_name, $row->sofia_id, $filter_date_from, $filter_date_to);
+                                      if ($mw_gateway_total_answered_calls != 0){
+                                        $acd = $total_duration_in_min_sec / $mw_gateway_total_answered_calls;
                                         echo round($acd,4).'&nbsp;'.$filter_display_results;
-                                    ?></td>
+                                      }
+                                      else echo "N / A";
+                                ?></td>
               <td align="center"><?php echo "PDD Value" ?></td>
             </tr>
             <tr style="height:5px;">
